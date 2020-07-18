@@ -66,7 +66,7 @@ var handleNoteSave = function() {
 var handleNoteDelete = function(event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
-
+  console.log(event)
   var note = $(this)
     .parent(".list-group-item")
     .data();
@@ -138,6 +138,7 @@ $newNoteBtn.on("click", handleNewNoteView);
 $noteList.on("click", ".delete-note", handleNoteDelete);
 $noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
+//$delBtn.on("click", handleNoteDelete)
 
 // Gets and renders the initial list of notes
 getAndRenderNotes();
