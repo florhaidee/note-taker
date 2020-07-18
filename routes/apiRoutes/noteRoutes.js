@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { filterByQuery, findById, validateNote } = require('../../lib/notes');
+const { filterByQuery, findById, createNewNote, validateNote } = require('../../lib/notes');
 const { notes } = require('../../data/notes');
 
 //get notes by query
@@ -18,6 +18,17 @@ router.get('/notes/:id', (req, res) => {
       res.json(result);
     } else {
       res.send(404);
+    }
+});
+//post data (note) to server
+router.post('/notes', (req, res) => {
+    console.log('req.body',req.body)
+    // if any data in req.body is incorrect, send 400 error back
+    if (!validateNote(req.body)) {
+      res.status(400).send('The note is not properly formatted.');
+    } else {
+      const note = createNewNote(req.body, notes);
+      res.json(note);
     }
 });
 
