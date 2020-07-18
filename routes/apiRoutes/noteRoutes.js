@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { filterByQuery, findById, createNewNote, validateNote, deleteNote } = require('../../lib/notes');
-const { notes } = require('../../data/notes');
+let { notes } = require('../../data/notes');
 
 //get notes by query
 router.get('/notes', (req, res) => {
@@ -30,12 +30,13 @@ router.post('/notes', (req, res) => {
       res.json(note);
     }
 });
-
-router.delete('/notes:id', (req, res) => {
-  console.log('delete',req.body)
+// request to delete a note by id
+router.delete('/notes/:id', (req, res) => {
+  console.log('delete id', req.params.id)
   const newArray = deleteNote(req.params.id, notes);
     if (newArray) {
       res.json(newArray);
+      notes = newArray;
     } else {
       res.send("Couldn't delete note");
     }
